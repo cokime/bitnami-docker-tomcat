@@ -232,6 +232,19 @@ tomcat_enable_remote_management() {
 }
 
 ########################
+# tomcat_add_error_report_valve
+# Globals:
+#   TOMCAT_*
+# Arguments:
+#   None
+# Returns:
+#   None
+#########################
+tomcat_add_error_report_valve() {
+    replace_in_file "$TOMCAT_CONF_FILE" "<Valve className=\"org.apache.catalina.valves.AccessLogValve\"" "<Valve className=\"org.apache.catalina.valves.ErrorReportValve\" showReport=\"false\" showServerInfo=\"false\"/><Valve className=\"org.apache.catalina.valves.AccessLogValve\""
+}
+
+########################
 # Create tomcat user
 # Globals:
 #   TOMCAT_*
@@ -285,4 +298,5 @@ tomcat_initialize() {
     if is_boolean_yes "$TOMCAT_ALLOW_REMOTE_MANAGEMENT"; then
         tomcat_enable_remote_management
     fi
+	tomcat_add_error_report_valve
 }
